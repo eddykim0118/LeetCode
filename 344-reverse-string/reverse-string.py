@@ -5,17 +5,12 @@ class Solution:
         """
         Do not return anything, modify s in-place instead.
         """
-        # Initialize two pointers
-        left, right = 0, len(s) - 1
-
-        # Swap characters until the pointers meet in the middle
+        left, right = 0, len(s) - 1  # Initialize two pointers
+        
         while left < right:
-            # Swap the characters at left and right pointers
-            s[left], s[right] = s[right], s[left]
-            # Move the left pointer to the right
-            left += 1
-            # Move the right pointer to the left
-            right -= 1
+            s[left], s[right] = s[right], s[left]  # Swap characters
+            left += 1  # Move left pointer to the right
+            right -= 1  # Move right pointer to the left
 
 # Example usage:
 solution = Solution()
