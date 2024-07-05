@@ -8,9 +8,10 @@ class Solution:
         left, right = 0, len(s) - 1  # Initialize two pointers
         
         while left < right:
-            s[left], s[right] = s[right], s[left]  # Swap characters
-            left += 1  # Move left pointer to the right
-            right -= 1  # Move right pointer to the left
+            # Swap characters using tuple unpacking, which can be more efficient in Python
+            s[left], s[right] = s[right], s[left]
+            left += 1
+            right -= 1
 
 # Example usage:
 solution = Solution()
