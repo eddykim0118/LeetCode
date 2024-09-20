@@ -6,22 +6,9 @@ class Solution:
         for i in range(listSize):
             if flowerbed[i] == 0:
                 # check if left and right is empty
-                # first check if left is empty
-                if i == 0:
-                    is_left_empty = True
-                elif flowerbed[i-1] == 0:
-                    is_left_empty = True
-                else:
-                    is_left_empty = False
+                is_left_empty = (i == 0) or (flowerbed[i-1] == 0)
+                is_right_empty = (i == listSize - 1) or (flowerbed[i+1] == 0)
 
-                # now check if right is empty
-                if i == listSize - 1:
-                    is_right_empty = True
-                elif flowerbed[i+1] == 0:
-                    is_right_empty = True
-                else:
-                    is_right_empty = False
-                
                 if is_left_empty and is_right_empty:
                     # plant a flower
                     flowerbed[i] = 1
