@@ -3,5 +3,3 @@ class Solution:
         words_list = s.split() 
         reversed_words = words_list[::-1]
         return " ".join(reversed_words)
-
-
