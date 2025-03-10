@@ -4,27 +4,17 @@
  * @return {string}
  */
 var gcdOfStrings = function(str1, str2) {
-    if (str1 + str2 !== str2 + str1) {
-        return "";
+    if (str1.length < str2.length) {
+        [str1, str2] = [str2, str1];
+    } 
+
+    if (str2.length === 0) {
+        return str1;
     }
 
-    const gcdLength = gcd(str1.length, str2.length);
+    if (str1.startsWith(str2)) {
+        return gcdOfStrings(str1.slice(str2.length), str2);
+    }
 
-    return str1.substring(0, gcdLength);
+    return "";
 };
-
-/**
- * @param {number} a
- * @param {number} b
- * @return {number}
- */
-
- function gcd(a, b) {
-    while (b !== 0) {
-        const temp = b;
-        b = a % b;
-        a = temp;
-    }
-
-    return a;
- }
