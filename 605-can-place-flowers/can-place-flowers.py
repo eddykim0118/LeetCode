@@ -1,18 +1,25 @@
 class Solution:
     def canPlaceFlowers(self, flowerbed: List[int], n: int) -> bool:
-        flower_count = 0
-        listSize = len(flowerbed)
+        if n == 0:
+            return True
 
-        for i in range(listSize):
-            if flowerbed[i] == 0:
-                # check if left and right is empty
-                is_left_empty = (i == 0) or (flowerbed[i-1] == 0)
-                is_right_empty = (i == listSize - 1) or (flowerbed[i+1] == 0)
+        length = len(flowerbed)
+        i = 0
 
-                if is_left_empty and is_right_empty:
-                    # plant a flower
-                    flowerbed[i] = 1
-                    flower_count += 1
-        
-        return flower_count >= n
-        
+        while i < length:
+            if flowerbed[i] == 1:
+                i += 2
+                continue
+            
+            if (i == 0 or flowerbed[i-1] == 0) and (i == length-1 or flowerbed[i+1] == 0):
+                n -= 1
+
+                if n == 0:
+                    return True
+
+                i += 2
+            else:
+                i += 1
+
+        return False
+            
