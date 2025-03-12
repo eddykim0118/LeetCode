@@ -12,19 +12,19 @@ function canPlaceFlowers(flowerbed: number[], n: number): boolean {
             continue;
         }
         
-            if ((i === 0 || flowerbed[i-1] === 0) && (i === length - 1 || flowerbed[i + 1] === 0)) {
-                flowerbed[i] = 1;
-                n--;
-            
+        if ((i === 0 || flowerbed[i-1] === 0) && (i === length - 1 || flowerbed[i + 1] === 0)) {
+            flowerbed[i] = 1;
+            n--;
+        
 
-                if (n === 0) {
-                    return true;
-                }
-
-            i += 2;
-            } else {
-                i++;
+            if (n === 0) {
+                return true;
             }
+
+        i += 2;
+        } else {
+            i++;
+        }
     }
             
     return false;
