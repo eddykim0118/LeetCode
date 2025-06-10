@@ -1,12 +1,18 @@
 class Solution:
     def mergeAlternately(self, word1: str, word2: str) -> str:
-        merged = []
+        i, j = 0, 0
+        n, m = len(word1), len(word2)
+        result = []
 
-        for c1, c2 in zip(word1, word2):
-            merged.append(c1)
-            merged.append(c2)
+        while i < n and j < m:
+            result.append(word1[i])
+            result.append(word2[j])
+            i += 1
+            j += 1
 
-        merged.append(word1[len(word2):])
-        merged.append(word2[len(word1):])
+        if i < n:
+            result.append(word1[i:])
+        if j < m:
+            result.append(word2[j:])
 
-        return ''.join(merged)
+        return ''.join(result)
