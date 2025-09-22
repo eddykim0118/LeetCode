@@ -1,20 +1,21 @@
 class Solution:
     def subdomainVisits(self, cpdomains: List[str]) -> List[str]:
-        domain_count = defaultdict(int)
+        # figure out all possible domains
+        all_possible_domains = []
+        domain_dict = {}
+        for cpdomain in cpdomains :
+            count = int(cpdomain.split()[0])
+            actual_domain = cpdomain.split()[1]
+            domain_dict[actual_domain] = domain_dict.get(actual_domain, 0) + count
+            # we need to figure out all domains for this
+            for index, char in enumerate(actual_domain) :
+                if char == '.' :
+                    next_domain = actual_domain[index + 1:]
+                    domain_dict[next_domain] = domain_dict.get(next_domain, 0) + count
 
-        for cpdomain in cpdomains:
-            parts = cpdomain.split(' ')
-            count = int(parts[0])
-            domain = parts[1]
+        output = []
+        for key in domain_dict.keys() :
+            count = str(domain_dict[key])
+            output.append(count + " " + key)
 
-            domain_parts = domain.split('.')
-
-            for i in range(len(domain_parts)):
-                subdomain = '.'.join(domain_parts[i:])
-                domain_count[subdomain] += count
-
-        result = []
-        for domain, count in domain_count.items():
-            result.append(f"{count} {domain}")
-
-        return result
+        return output
