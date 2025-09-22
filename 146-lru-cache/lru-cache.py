@@ -6,33 +6,27 @@ class Node:
         self.next = None
 
 class LRUCache:
-    
+    # Caching problem ==> HashMap & Doubly-Linked List
+    # We should use Node
+
     def __init__(self, capacity: int):
-       # ititialize the LRU cache with positive size capacity
-       # in this case, hashmap and doubly linked would be good to use
-       # also, I think we probably would need to make dummy cases as Head and Tail
-       # capacity = how much key-value it can hold
+      '''
+        Initialize the LRU cache with positive size "capacity"
+      '''
+      self.capacity = capacity
+      self.cache = {}
 
-       self.capacity = capacity
-       self.cache = {} # hashmap, 
-       # Stores key (the cache key) → Node mappings (a Node object (which contains the key, value, and links to neighbors))
-       
-       # Node(0, 0) -> dummy
-       ## this is simply a place holder
-       self.head = Node(0, 0) # always before the least recently used node.
-       self.tail = Node(0, 0) # always after the most recently used node.
-
-       # The head and tail are initially connected to each other:
-       self.head.next = self.tail
-       self.tail.prev = self.head
+      self.head = Node(0, 0)
+      self.tail = Node(0, 0)
+      self.head.next = self.tail
+      self.tail.prev = self.head
     
+    # O(1) avg time complexity required
     def get(self, key: int) -> int:
-        # put key-value pari
-        # if key esists, update and move to front
-            # return the value of the "key"
-            # if new key and at capacity, evict LRU item first
-        # if the key doesn't exist, return -1
-        
+        '''
+            If key exists, RETURN the value of "key"
+            If not, RETURN -1
+        '''
         if key in self.cache:
             node = self.cache[key]
             self._move_to_front(node)
@@ -40,33 +34,30 @@ class LRUCache:
         
         return -1
 
+    # O(1) avg time complexity required
     def put(self, key: int, value: int) -> None:
-        # update the value key if the key esists
-        # add the key-value pair to the cache
-        # if the number of keys exceeds the capacity from the operation
-        # -> evict the least recently used key
-        
-        if key in self.cache: # self.cache = dict mapping keys->nodes for O(1) lookup
-            node = self.cache[key] 
+        '''
+            If key exists:
+                - update the value of the key
+            else:
+                - add the key-value pari to the cache
+                - if the number of keys exceeds the "capacity" -> evict lru key
+        '''
+        if key in self.cache:
+            node = self.cache[key]
             node.value = value
-
-            # to move the node to the head of the doubly linked list (marking)
-            # -> marking it most recently used
-            self._move_to_front(node) 
+            self._move_to_front(node)
         else:
-            # Add new key
             if len(self.cache) >= self.capacity:
-                # Evict least recently used (tail.prev)
-                self._evict_lru() 
+                self._evict_lru()
             
             new_node = Node(key, value)
             self.cache[key] = new_node
             self._add_to_front(new_node)
 
-
     def _move_to_front(self, node):
-        self._remove_node(node) # detaching the node
-        self._add_to_front(node) # inserting right after the dummy head node
+        self._remove_node(node)
+        self._add_to_front(node)
 
     def _remove_node(self, node):
         node.prev.next = node.next
