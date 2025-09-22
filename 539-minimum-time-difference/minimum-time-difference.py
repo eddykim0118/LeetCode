@@ -1,10 +1,10 @@
 class Solution:
     def findMinDifference(self, timePoints: List[str]) -> int:
+        def timeToMinutes(time: str) -> int:
+            hours, minutes = map(int, time.split(':'))
+            return hours * 60 + minutes
 
-        minutes = []
-        for time in timePoints:
-            h, m = map(int, time.split(':'))
-            minutes.append(h * 60 + m)
+        minutes = [timeToMinutes(tp) for tp in timePoints]
         
         minutes.sort()
         min_diff = float('inf')
