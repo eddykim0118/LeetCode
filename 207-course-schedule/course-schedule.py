@@ -1,21 +1,29 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         graph = defaultdict(list)
-        indegree = [0] * numCourses
+        for course, prereq in prerequisites:
+            graph[prereq].append(course)
 
-        for a, b in prerequisites:
-            graph[b].append(a)
-            indegree[a] += 1
+        state = [0] * numCourses
 
-        queue = deque([i for i in range(numCourses) if indegree[i] == 0])
+        def has_cycle(course):
+            if state[course] == 1:
+                return True
+            if state[course] == 2:
+                return False
 
-        count = 0
-        while queue:
-            node = queue.popleft()
-            count += 1
-            for nei in graph[node]:
-                indegree[nei] -= 1
-                if indegree[nei] == 0:
-                    queue.append(nei)
+            state[course] = 1
 
-        return count == numCourses
+            for next_course in graph[course]:
+                if has_cycle(next_course):
+                    return True
+
+            state[course] = 2
+            return False
+
+        for course in range(numCourses):
+            if state[course] == 0:
+                if has_cycle(course):
+                    return False
+        
+        return True
